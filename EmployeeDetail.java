@@ -7,92 +7,74 @@
  */
 
 import java.util.Scanner;
-
+public class EmployeeDetail {
+	public static void main(String[] args) {
+		Officer officer=new Officer();
+		Manager manager=new Manager();
+		officer.getdetails();
+		officer.getspecialization();
+		System.out.println();
+	    System.out.println("Details of the officer:");
+	    officer.printdetails();
+		officer.printSalary();
+		officer.printspecialization();
+		//manager
+		System.out.println();
+		manager.getdetails();
+		manager.getdepartment();
+		System.out.println();
+		System.out.println("Details of the manager:");
+		manager.printdetails();
+		officer.printSalary();
+	    manager.printdepartment();
+		}
+	}
 class Employee{
-
-String name,address;
-int age;
-Long phno;
-double salary;
-void printSalary() {
-System.out.println("Salary = "+salary);
-}
-void display() {
-System.out.println("Name : "+name+"\nAge : "+age+"\nPhone Number : "+phno+"\nSalary : "+salary+"\nAdress : "+address);
-}
+   Scanner sc=new Scanner(System.in);
+   int salary,age;
+   String name,address;
+   long phone;
+	public void getdetails() {
+		System.out.println("enter the following details:");
+		System.out.print("name:");
+		name =sc.nextLine();
+		System.out.print("age:");
+		age=sc.nextInt();
+		System.out.print("phone number:");
+		phone=sc.nextLong();
+		System.out.print("salary:");
+		salary=sc.nextInt();
+		sc.nextLine();
+		System.out.print("address:");
+	    address=sc.nextLine();	
+	}
+	public void printSalary() {
+		System.out.println("salary:"+salary);
+		}
+	public void printdetails() {
+		System.out.println("name:"+name);
+		System.out.println("age:"+age);
+		System.out.println("phone number:"+phone);
+		System.out.println("address:"+address);
+	}
 }
 class Officer extends Employee{
-String Specialization;
-Officer(String name,int age,String address,Long phno,double salary,String specialization){
-this.name=name;
-this.age=age;
-this.address=address;
-this.phno=phno;
-this.salary=salary;
-Specialization=specialization;
-}
-
-
-void printSpecialization(){
-System.out.println("Specialization : "+Specialization);
-}
+	String specialize;
+	public void getspecialization() {
+		System.out.println("enter your specialisation:");
+		specialize=sc.nextLine();
+	}
+	public void printspecialization() {
+		System.out.println("specialisation:"+specialize);
+		}
 }
 class Manager extends Employee{
-String Department;
-Manager(String name,int age,String address,Long phno,double salary,String department){
-this.name=name;
-this.age=age;
-this.address=address;
-this.phno=phno;
-this.salary=salary;
-Department=department;
-}
-void printDepartment() {
-System.out.println("Department : "+Department);
-}
-}
-public class EmployeeDetail{
-public static void main(String[] args) {
-Scanner s = new Scanner(System.in);
-String name,address,specialization,department;int age;Long phno;double salary;
-System.out.println("\nEnter the Officer Details");
-System.out.println("Name :");
-name=s.next();
-
-
-System.out.println("Age : ");
-age=s.nextInt();
-System.out.println("Address : ");
-address=s.next();
-System.out.println("Phone Number : ");
-phno=s.nextLong();
-System.out.println("Salary : ");
-salary=s.nextDouble();
-System.out.println("Specialization : ");
-specialization=s.next();
-Officer office =new Officer(name,age,address,phno,salary,specialization);
-System.out.println("\nEnter the Manager Details");
-System.out.println("Name :");
-name=s.next();
-System.out.println("Age : ");
-age=s.nextInt();
-System.out.println("Address : ");
-address=s.next();
-System.out.println("Phone Number : ");
-phno=s.nextLong();
-System.out.println("Salary : ");
-salary=s.nextDouble();
-System.out.println("Department : ");
-department=s.next();
-Manager manage =new Manager(name,age,address,phno,salary,department);
-
-
-System.out.println("\nOfficer Details");
-office.display();
-office.printSpecialization();
-System.out.println("\nManager Details");
-manage.display();
-manage.printDepartment();
-s.close();
-}
+	String department;
+	public void getdepartment() {
+		System.out.println("enter your department:");
+		department=sc.next();
+	}
+	public void printdepartment() {
+		System.out.println("department:"+department);
+	}
 }
