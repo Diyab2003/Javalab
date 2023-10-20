@@ -1,12 +1,11 @@
-/*
- * File        : ShapeArea.java
- * Description : To calculate the area of different shapes using method overloading
+/* 
+ *File         : ShapeArea
+ * Description : To get the shape area
  * Author      : Diya Benny
  * Version     : 1.0
- * Date        : 10/10/2023
- * 
- */
-import java.util.Scanner;
+ * Date        : 13/10/2023
+*/
+import java.util.Scanner; 
 public class ShapeArea {
  public static void main(String[] args) {
 	 Shape shape=new Shape();
