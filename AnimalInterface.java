@@ -1,3 +1,11 @@
+/*
+File        :   AnimalInterface.java
+Description :   Java program to create abstract class Animal using interface
+Author      :   Diya Benny
+Version     :   1.0
+Date        :   03/11/2023
+*/
+
 public class AnimalInterface {
     public static void main(String[] args) {
         Fish f1 = new Fish("Mimi");
@@ -29,7 +37,7 @@ public class AnimalInterface {
 }
 
 
-// --------------------------------------------animal----------------------------------------------------------
+// --------------------------------------------Animal----------------------------------------------------------
 abstract class Animal {
     protected int legs;
 
@@ -40,7 +48,7 @@ abstract class Animal {
     public abstract void eat();
 
     public void walk() {
-        System.out.println("This animal walks on " + legs + " legs.");
+        System.out.println("Fish has 0" + legs + " legs.");
     }
 }
 
@@ -94,7 +102,7 @@ class Cat extends Animal implements Pet {
         name = n;
     }
 
-    public void play() {
+    public void play() { 
         System.out.println(name + " plays with a ball of yarn.");
     }
 
@@ -112,4 +120,4 @@ class Spider extends Animal {
     public void eat() {
         System.out.println("Spider eat insects");
     }
-}
+}0
