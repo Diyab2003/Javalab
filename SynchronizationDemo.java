@@ -1,21 +1,42 @@
 package default_package;
 class MultiplicationTable{
-	void printMultiplicationTable(int number) {
-		for(int i=1;i<=10;i++) {
+	synchronized void printMultiplicationTable(int number) {
+			for(int i=1;i<=10;i++) {
 				System.out.println(i+"x"+number+"="+i*number);
 		}
+		}
+	}
+class MyThread1 extends Thread{
+	MultiplicationTable t;
+	MyThread1(MultiplicationTable t){
+		this.t=t;
+	}
+	public void run() {
+		System.out.println(Thread.currentThread().getName());
+		System.out.println(Thread.currentThread().getPriority());
+		t.printMultiplicationTable(5);
 	}
 }
-class MyThread1 extends Thread{
-	MultiplicationTable t=new MultiplicationTable();
-	MyThread1(MultiplicationTable t){
-		
+class MyThread2 extends Thread{
+	MultiplicationTable t2;
+	MyThread2(MultiplicationTable t) {
+		this.t2=t;
+	}
+	public void run() {
+		System.out.println(Thread.currentThread().getName());
+		System.out.println(Thread.currentThread().getPriority());
+		t2.printMultiplicationTable(8);
 	}
 }
 public class SynchronizationDemo {
 	public static void main(String[]args) {
 		MultiplicationTable m=new MultiplicationTable();
-		m.printMultiplicationTable(5);	
+	MyThread1 t=new MyThread1(m);
+
+	MyThread2 t2=new MyThread2(m);
+	t2.setPriority(2);
+	t2.start();
+	t.start();
 	}
 }
 
