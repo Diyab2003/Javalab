@@ -20,7 +20,7 @@ class NumberManager{
 		numberGenerated=false;
 		}
 	public synchronized void printOddNumbers() throws InterruptedException {
-		while(numberGenerated || generatedNumber %2!=0) {
+		while(!numberGenerated || generatedNumber %2==0) {
 			wait();
 			}
 		for(int i=1;i<=generatedNumber;i+=2) {
@@ -91,6 +91,8 @@ public class MultiThreadOddEven{
 		oddPrinterThread.start();
 	}
 }
+
+		
 
 		
 	
