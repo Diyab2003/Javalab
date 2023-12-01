@@ -1,103 +1,105 @@
-package default_package;
+
 import java.util.Random;
-class NumberManager{
-	private int generatedNumber;
-	private boolean numberGenerated=false;
-	public synchronized void generateNumber() {
-	generatedNumber = new Random().nextInt(99)+2;
-	System.out.println("Generated Random Number:"+generatedNumber);
-	numberGenerated=true;
-	notifyAll();
-	}
-	public synchronized void printEvenNumbers() throws InterruptedException {
-		while(!numberGenerated || generatedNumber %2!=0) {
-			wait();
-			}
-		for(int i=2;i<=generatedNumber;i+=2) {
-			System.out.print(i+" ");
-			}
-		System.out.println();
-		numberGenerated=false;
-		}
-	public synchronized void printOddNumbers() throws InterruptedException {
-		while(!numberGenerated || generatedNumber %2==0) {
-			wait();
-			}
-		for(int i=1;i<=generatedNumber;i+=2) {
-			System.out.print(i+" ");
-			}
-		System.out.println();
-		numberGenerated=false;
-		}
+
+class NumManager {
+    private int generatedNumber;
+    private boolean numberGenerated = false;
+
+    public synchronized void generateNumber() {
+        generatedNumber = new Random().nextInt(99) + 2;
+        System.out.println("Random Number generated:" + generatedNumber);
+        numberGenerated = true;
+        notifyAll(); 
+    }
+
+    public synchronized void Square() {
+        try {
+            while (!numberGenerated || generatedNumber % 2 != 0) {
+                wait();
+            }
+
+            System.out.println("The number is even and its square is " + generatedNumber * generatedNumber);
+            numberGenerated = false;
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public synchronized void Cube() {
+        try {
+            while (!numberGenerated || generatedNumber % 2 == 0) {
+                wait();
+            }
+            System.out.println("The number is odd and its cube is " + generatedNumber * generatedNumber * generatedNumber);
+            numberGenerated = false;
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 }
 
-class NumberGenerator extends Thread{
-	NumberManager numberManager;
-	public NumberGenerator(NumberManager numberManager) {
-		this.numberManager=numberManager;
-	}
-	public void run() {
-		while(true) {
-			numberManager.generateNumber();
-			try {
-				Thread.sleep(1000);
-			} catch(InterruptedException e) {
-				e.printStackTrace();
-				}
-			}
-	}
+class NumberGenerator extends Thread {
+    private NumManager numManager;
+
+    public NumberGenerator(NumManager numberManager) {
+        this.numManager = numberManager;
+        this.setName("NumberGenerator");
+    }
+
+    public void run() {
+        while (true) {
+            numManager.generateNumber();
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }
 
-class EvenPrinterThread extends Thread{
-	NumberManager numberManager;
-	public EvenPrinterThread(NumberManager numberManager) {
-		this.numberManager =numberManager;
-	}
-	public void run() {
-		while(true) {
-			try {
-				numberManager.printEvenNumbers();
-			}  catch(InterruptedException e) {
-				e.printStackTrace();
-			}
-			
-		}
-	}
-}
-class OddPrinterThread extends Thread{
-	NumberManager numberManager;
-	public OddPrinterThread(NumberManager numberManager) {
-		this.numberManager =numberManager;
-	}
-	public void run() {
-		while(true) {
-			try {
-				numberManager.printOddNumbers();
-			}  catch(InterruptedException e) {
-				e.printStackTrace();
-			}
-			
-		}
-	}
-}
-public class MultiThreadOddEven{
-	public static void main(String[]args) {
-		NumberManager numberManager= new NumberManager();
-		NumberGenerator numberGenerator=new NumberGenerator(numberManager);
-		EvenPrinterThread evenPrinterThread=new EvenPrinterThread(numberManager);
-		OddPrinterThread oddPrinterThread=new OddPrinterThread(numberManager);
-		numberGenerator.start();
-		evenPrinterThread.start();
-		oddPrinterThread.start();
-	}
+class Even extends Thread {
+    private NumManager numManager;
+
+    public Even(NumManager numManager) {
+        this.numManager = numManager;
+        this.setName("Even");
+    }
+
+    public void run() {
+        while (true) {
+            numManager.Square();
+        }
+    }
 }
 
-		
+class Odd extends Thread {
+    private NumManager numManager;
 
-		
-	
+    public Odd(NumManager numManager) {
+        this.numManager = numManager;
+        this.setName("Odd");
+    }
 
-	
-	
+    public void run() {
+        while (true) {
+            numManager.Cube();
+        }
+    }
+}
 
+public class MultiThreadOddEven {
+    public static void main(String[] args) {
 
+        NumManager numberManager = new NumManager();
+
+        NumberGenerator numberGenerator = new NumberGenerator(numberManager);
+        Even even = new Even(numberManager);
+        Odd odd = new Odd(numberManager);
+
+        numberGenerator.start();
+        even.start();
+        odd.start();
+    }
+}
