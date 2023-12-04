@@ -1,5 +1,5 @@
 /*
- * File        : MatrixMultiplication.java
+ * File        : Frequency.java
  * Description : Java program to find the frequency of a character
  * Author      : Diya Benny
  * Version     : 1.0
